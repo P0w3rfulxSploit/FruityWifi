@@ -254,10 +254,12 @@ echo
 echo "--------------------------------"
 echo "Start Services"
 echo "--------------------------------"
-update-rc.d ssh defaults
-update-rc.d nginx defaults
-update-rc.d php5-fpm defaults
-update-rc.d ntp defaults
+
+# disable service autostart for nethunter. Prefer to launch these via a script
+# update-rc.d ssh defaults
+# update-rc.d nginx defaults
+# update-rc.d php5-fpm defaults
+# update-rc.d ntp defaults
 
 /etc/init.d/nginx restart
 /etc/init.d/php5-fpm restart

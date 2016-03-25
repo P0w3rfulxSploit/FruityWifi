@@ -68,7 +68,10 @@ for modules in dom.getElementsByTagName('module'):
 	# Install module
 	if (float(version.replace(".",""))) >= float(info['required'].replace(".","")):
 		print info['name'] + " v" + info['version']
-		cmd_install = "git clone https://github.com/xtr4nge/module_"+info['name']+".git /usr/share/fruitywifi/www/modules/"+info['name']
+		if info['name'] == "sslstrip2":
+			cmd_install = "git clone https://github.com/Und3rf10w/module_"+info['name']+".git /usr/share/fruitywifi/www/modules/"+info['name']
+		else
+			cmd_install = "git clone https://github.com/xtr4nge/module_"+info['name']+".git /usr/share/fruitywifi/www/modules/"+info['name']
 		print cmd_install
 		os.system(cmd_install)
 		cmd_install = "cd /usr/share/fruitywifi/www/modules/"+info['name']+"/includes/; chmod 755 install.sh; ./install.sh;"
