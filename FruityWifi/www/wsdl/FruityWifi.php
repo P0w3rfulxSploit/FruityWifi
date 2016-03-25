@@ -276,41 +276,41 @@ function getInterface($v_config) {
 
 function setInterface($v_config, $v_inteface) {
 
-    $bin_danger = "/usr/share/fruitywifi/bin/danger";
+    $bin_danger = "/usr/bin/sudo"; // 'danger' to 'sudo'
 
     //include "../config/config.php";
     
     if ($v_config == "i_internet") {
         $exec = "/bin/sed -i 's/io_out_iface=.*/io_out_iface=\\\"".$v_inteface."\\\";/g' ../config/config.php";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
             
     } else if ($v_config == "i_wireless") {
         $exec = "/bin/sed -i 's/io_in_iface=.*/io_in_iface=\\\"".$v_inteface."\\\";/g' ../config/config.php";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
  
         // replace interface in hostapd.conf and hostapd-secure.conf
         $exec = "/bin/sed -i 's/^interface=.*/interface=".$v_inteface."/g' /usr/share/fruitywifi/conf/hostapd.conf";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
         $exec = "/bin/sed -i 's/^interface=.*/interface=".$v_inteface."/g' /usr/share/fruitywifi/conf/hostapd-secure.conf";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
         
         $exec = "/bin/sed -i 's/interface=.*/interface=".$v_inteface."/g' /usr/share/fruitywifi/conf/dnsmasq.conf";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
         
         //EXTRACT MACADDRESS
         $exec = "/sbin/ifconfig -a ".$v_inteface." |grep HWaddr";
-        $output = exec("$bin_danger \"" . $exec . "\"" );
+        $output = exec("$bin_danger sh -c \"$exec\"");
         $output = preg_replace('/\s+/', ' ',$output);
         $output = explode(" ",$output);
         
         $exec = "/bin/sed -i 's/^bssid=.*/bssid=".$output[4]."/g' /usr/share/fruitywifi/conf/hostapd.conf";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
         $exec = "/bin/sed -i 's/^bssid=.*/bssid=".$output[4]."/g' /usr/share/fruitywifi/conf/hostapd-secure.conf";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
             
     } else if ($v_config == "i_monitor") {
         $exec = "/bin/sed -i 's/io_in_iface_extra=.*/io_in_iface_extra=\\\"".$v_inteface."\\\";/g' ../config/config.php";
-        exec("$bin_danger \"" . $exec . "\"" );
+        exec("$bin_danger sh -c \"$exec\"");
             
     } else {
         return "*error*";
@@ -411,7 +411,7 @@ function getStatus($v_service) {
                     
     } else if ($v_service == "s_karma") {
         $exec = "/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_get_state | tail -1";
-        $status = exec("/usr/share/fruitywifi/bin/danger \"" . $exec . "\"" );
+        $status = exec("/usr/bin/sudo sh -c \"$exec\"" );
         if ( $status == "ENABLED" ){
             $status = true;
         }
@@ -679,7 +679,7 @@ function getServiceStatus($v_service, $v_module2) {
 			
 	} else if ($v_service == "s_karma") {
 		$exec = "/usr/sbin/karma-hostapd_cli -p /var/run/hostapd-phy0 karma_get_state | tail -1";
-		$status = exec("/usr/share/fruitywifi/bin/danger \"" . $exec . "\"" );
+        $status = exec("/usr/bin/sudo sh -c \"$exec\"" );
 		if ( $status == "ENABLED" ){
 			$status = true;
 		}

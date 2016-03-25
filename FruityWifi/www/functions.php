@@ -45,9 +45,9 @@ function exec_fruitywifi($exec) {
     $exec_mode = "sudo";
 
     if ($exec_mode == "danger") {
-    
-        $bin_exec = "/usr/share/fruitywifi/bin/danger";
-        exec("$bin_exec \"" . $exec . "\"", $output);
+        // everything is using sudo now, changing this in case it breaks
+        $bin_exec = "/usr/bin/sudo";
+        exec("$bin_exec sh -c \"$exec\"", $output);
         return $output;
         
     } else if ($exec_mode == "sudo") {
@@ -73,8 +73,8 @@ function exec_fruitywifi_env($exec) {
 
     if ($exec_mode == "danger") {
     
-        $bin_exec = "/usr/share/fruitywifi/bin/danger";
-        exec("$bin_exec \"" . $exec . "\"", $output);
+        $bin_exec = "/usr/bin/sudo";
+        exec("$bin_exec env PATH=\"$ROOT_PATH\" sh -c \"$exec\"", $output);
         return $output;
     
     } else if ($exec_mode == "sudo") {

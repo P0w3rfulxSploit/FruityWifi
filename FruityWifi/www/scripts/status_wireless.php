@@ -35,7 +35,7 @@ if ($regex == 1) {
 $service = $_GET['service'];
 $action = $_GET['action'];
 
-$bin_danger = "/usr/share/fruitywifi/bin/danger";
+// $bin_danger = "/usr/share/fruitywifi/bin/danger";
 $bin_killall = "/usr/bin/killall";
 $bin_ifconfig = "/sbin/ifconfig";
 $bin_iptables = "/sbin/iptables";
